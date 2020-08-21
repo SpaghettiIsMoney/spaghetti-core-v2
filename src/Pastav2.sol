@@ -37,7 +37,8 @@ contract DSMath {
 
 contract SpaghettiTokenV2 is DSMath {
     uint128                                           public  totalSupply;
-    mapping (address => uint128)                      public  balanceOf;
+    uint128                                           public  burnedSupply;
+    mapping (address => uint128)                      public  balances;
     mapping (address => mapping (address => uint128)) public  allowance;
     bytes32                                           public  symbol = "PASTA";
     uint256                                           public  decimals = 18;
@@ -65,6 +66,10 @@ contract SpaghettiTokenV2 is DSMath {
 
     function transfer(address dst, uint wad) external returns (bool) {
         return transferFrom(msg.sender, dst, wad);
+    }
+    
+ function balanceOf(address account) public view returns (uint128) {
+        return (balances[account]*totalSupply/(totalSupply-burnedSupply));
     }
 
     function transferFrom(address src, address dst, uint wad) public returns (bool) {
@@ -97,6 +102,7 @@ contract SpaghettiTokenV2 is DSMath {
 
     function burn(uint wad) internal {
         totalSupply = sub(totalSupply, wad);
+        burnSupply += wad
         emit Burn(wad);
     }
 
