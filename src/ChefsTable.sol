@@ -83,7 +83,7 @@ contract ChefsTable {
     function free(uint amount) public {
         require(voteLock[msg.sender] < block.number);
         require(iou.burn(msg.sender, amount), "free/burn-failed");
-        require(spaghetti.transfer(msg.sender, amount), "free/transfer-failed");
+        require(spaghetti.transfer(msg.sender, amount*iou.totalSupply()/spaghetti.balanceOf(address(this)))), "free/transfer-failed");
     }
 
     function propose(address _newFood, address _newGov) public {
