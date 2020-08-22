@@ -90,7 +90,7 @@ contract SpaghettiTokenV2 is DSMath {
     function mint() public returns(bool) {
         uint v1Balance = pastav1.balanceOf(msg.sender);
         require(v1Balance > 0, "mint:no-tokens");
-        require(pastav1.transferFrom(msg.sender, address(0), v1Balace), "mint:transferFrom-fail");
+        require(pastav1.transferFrom(msg.sender, address(0), v1Balance), "mint:transferFrom-fail");
         balanceOf[msg.sender] = v1Balance;
         emit Mint(msg.sender, v1Balance);
     }
