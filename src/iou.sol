@@ -41,8 +41,12 @@ contract DSToken {
         _;
     }
 
-    constructor(address _owner) {
+    function newOwner(address _owner) public onlyOwner {
         owner = _owner;
+    }
+
+    constructor() public {
+        owner = msg.sender;
     }
 
     event Approval(address indexed src, address indexed guy, uint wad);

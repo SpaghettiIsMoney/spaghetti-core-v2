@@ -43,7 +43,7 @@ contract SpaghettiTokenV2 is DSMath {
     uint256                                           public  decimals = 18;
     bytes32                                           public  name = "Spaghetti";
     ERC20                                             public  pastav1 = ERC20(0x08A2E41FB99A7599725190B9C970Ad3893fa33CF);
-    address                                           public  foodbank = 0x8f951903C9360345B4e1b536c7F5ae8f88A64e79; //Giveth multisig
+    address                                           public  foodbank = address(0);
     address                                           public  governance;
     uint128                                           public  food = 0;
     uint128                                           public  oven = 0;
@@ -98,6 +98,7 @@ contract SpaghettiTokenV2 is DSMath {
     }
 
     function give() internal {
+        require(foodbank != address(0), "foodbank not set");
         balanceOf[foodbank] = add(balanceOf[foodbank], food);
         food = 0;
     }
