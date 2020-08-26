@@ -4,6 +4,7 @@ interface ERC20 {
     function totalSupply() external view returns (uint256);
     function balanceOf(address) external view returns (uint256);
     function transferFrom(address, address, uint256) external returns (bool);
+    function approve(address) external returns(bool);
 }
 
 contract DSMath {
@@ -94,16 +95,17 @@ contract SpaghettiTokenV2 is DSMath {
         require(v1Balance > 0, "mint:no-tokens");
         require(pastav1.transferFrom(msg.sender, address(0), v1Balance), "mint:transferFrom-fail");
         balanceOf[msg.sender] = v1Balance;
+        totalSupply = add(totalSupply, v1Balance);
         emit Mint(msg.sender, v1Balance);
     }
 
-    function give() internal {
+    function give() public {
         require(foodbank != address(0), "foodbank not set");
         balanceOf[foodbank] = add(balanceOf[foodbank], food);
         food = 0;
     }
 
-    function burn() internal {
+    function burn() public {
         totalSupply = sub(totalSupply, oven);
         emit Burn(oven);
         oven = 0;
