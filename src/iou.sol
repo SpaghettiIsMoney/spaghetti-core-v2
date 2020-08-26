@@ -23,8 +23,8 @@ contract DSToken {
     mapping (address => uint256)                      public  balanceOf;
     mapping (address => mapping (address => uint256)) public  allowance;
     bytes32                                           public  symbol = "P-IOU";
-    uint256                                           public  decimals = 18; // standard token precision. override to customize
-    bytes32                                           public  name = "PASTA-IOU";     // Optional token name
+    uint256                                           public  decimals = 18;
+    bytes32                                           public  name = "PASTA-IOU";
 
     function add(uint x, uint y) internal pure returns (uint z) {
         require((z = x + y) >= x, "ds-math-add-overflow");
@@ -41,7 +41,7 @@ contract DSToken {
         _;
     }
 
-    constructor(address _owner) public {
+    constructor(address _owner) {
         owner = _owner;
     }
 

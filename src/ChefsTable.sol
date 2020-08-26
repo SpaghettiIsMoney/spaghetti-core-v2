@@ -56,7 +56,7 @@ contract ChefsTable {
         uint totalForVotes;
         uint totalAgainstVotes;
         uint start; // block start;
-        uint end; // start + period
+        uint end;   // start + period
         address newFood;
         address newGov;
     }
@@ -65,8 +65,8 @@ contract ChefsTable {
     mapping (uint => Proposal) public proposals;
     uint public proposalCount;
     uint public period = 17280; // voting period in blocks ~ 17280 3 days for 15s/block
-    uint public lock = 17280; // vote lock in blocks ~ 17280 3 days for 15s/block
-    uint public minimum = 1e18;
+    uint public lock = 17280;   // vote lock in blocks ~ 17280 3 days for 15s/block
+    uint public minimum = 1e18; // you need 1 PASTA to propose
 
     constructor(address _spaghetti, address _iou) public {
         spaghetti = PASTA(_spaghetti);

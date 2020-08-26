@@ -3,6 +3,8 @@ pragma solidity ^0.6.7;
 import "ds-test/test.sol";
 
 import "./Pastav2.sol";
+import "./ChefsTable.sol";
+import "./iou.sol";
 
 contract Pastav2Test is DSTest {
     Pastav2 pastav;
