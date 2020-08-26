@@ -36,15 +36,15 @@ contract DSMath {
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 contract SpaghettiTokenV2 is DSMath {
-    uint256                                           public  totalSupply;
-    mapping (address => uint256)                      public  balanceOf;
-    mapping (address => mapping (address => uint256)) public  allowance;
+    uint128                                           public  totalSupply;
+    mapping (address => uint128)                      public  balanceOf;
+    mapping (address => mapping (address => uint128)) public  allowance;
     bytes32                                           public  symbol = "PASTA";
     uint256                                           public  decimals = 18;
     bytes32                                           public  name = "Spaghetti";
     ERC20                                             public  pastav1 = ERC20(0x08A2E41FB99A7599725190B9C970Ad3893fa33CF);
-    address                                           public  foodbank = 0x8f951903C9360345B4e1b536c7F5ae8f88A64e79; //Giveth multisig
-    address                                           public  governance;
+    address                                           public  foodbank = address(0);
+    address                                           public  governance = address(0);
     uint128                                           public  food = 0;
     uint128                                           public  oven = 0;
 
@@ -53,7 +53,7 @@ contract SpaghettiTokenV2 is DSMath {
     event Mint(address indexed guy, uint wad);
     event Burn(uint wad);
 
-    constructor() public {
+    constructor() {
         governance = msg.sender;
     }
 
@@ -80,10 +80,10 @@ contract SpaghettiTokenV2 is DSMath {
         require(balanceOf[src] >= wad, "ds-token-insufficient-balance");
         balanceOf[src] = sub(balanceOf[src], wad);
         uint one = wad / 100;
-        uint ninetyeight = sub(wad, mul(one, 2));
+        uint ninetyeight = sub(wad, mul(one, 2);
         balanceOf[dst] = add(balanceOf[dst], ninetyeight);
-        food = uint128(add(food, uint128(one)));
-        oven = uint128(add(oven, uint128(one)));
+        food = add(food, one);
+        oven = add(oven, one);
 
         emit Transfer(src, dst, wad);
         return true;
@@ -92,12 +92,13 @@ contract SpaghettiTokenV2 is DSMath {
     function mint() public returns(bool) {
         uint v1Balance = pastav1.balanceOf(msg.sender);
         require(v1Balance > 0, "mint:no-tokens");
-        require(pastav1.transferFrom(msg.sender, address(0), v1Balance), "mint:transferFrom-fail");
+        require(pastav1.transferFrom(msg.sender, address(0), v1Balace), "mint:transferFrom-fail");
         balanceOf[msg.sender] = v1Balance;
         emit Mint(msg.sender, v1Balance);
     }
 
     function give() internal {
+        require(foodbank != address(0), "no bank set yet");
         balanceOf[foodbank] = add(balanceOf[foodbank], food);
         food = 0;
     }
